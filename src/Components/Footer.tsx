@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { BiMoon, BiSun } from 'react-icons/bi'
+import { useEffect } from 'react'
+import { BiMoon } from 'react-icons/bi'
 import { FaBars } from 'react-icons/fa'
 import { IoIosNotifications } from 'react-icons/io'
 import { NavLink } from 'react-router-dom'
