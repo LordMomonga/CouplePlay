@@ -1,37 +1,39 @@
 import { motion } from "framer-motion";
+import { AlertType } from "../Components/Modals/AlertType";
+import { useState } from "react";
 
 export const ActionVerite = () => {
+
+    const [showAlert, setShowAlert] = useState(false);
+    const [selectedMode, setSelectedMode] = useState<number | null>(null);
+
   const modeDeJeu = [
     {
       id: 1,
       title: "classique",
       emoji: "🎲",
-      description:
-        "Le mode classique d'Action ou Vérité avec des questions et des actions amusantes.",
+      description:"Le mode classique d'Action ou Vérité avec des questions et des actions amusantes.",
       niveau: "facile",
     },
     {
       id: 2,
       title: "audacieux",
       emoji: "🔥",
-      description:
-        "Un mode plus audacieux pour les couples prêts à relever des défis plus intenses.",
+      description:"Un mode plus audacieux pour les couples prêts à relever des défis plus intenses.",
       niveau: "moyen",
     },
     {
       id: 3,
       title: "excitant",
       emoji: "💓",
-      description:
-        "Ayez le cœur qui bat la chamade avec des actions et des questions excitantes.",
+      description:"Ayez le cœur qui bat la chamade avec des actions et des questions excitantes.",
       niveau: "difficile",
     },
     {
       id: 4,
       title: "pervers",
       emoji: "😈",
-      description:
-        "Pour les couples aventureux, ce mode propose des actions et des questions plus osées.",
+      description:"Pour les couples aventureux, ce mode propose des actions et des questions plus osées.",
       niveau: "impossible",
     },
   ];
@@ -50,6 +52,11 @@ export const ActionVerite = () => {
         return "bg-gray-200 text-gray-900";
     }
   };
+
+  const handleSelectMode = (modeId: number) => {
+    setSelectedMode(modeId);
+    setShowAlert(true);
+  }
 
   return (
     <motion.div
@@ -126,6 +133,7 @@ export const ActionVerite = () => {
             <motion.button
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => handleSelectMode(mode.id)}
               className="
                 w-full md:w-auto
                 px-5 py-2
@@ -141,6 +149,17 @@ export const ActionVerite = () => {
           </motion.div>
         ))}
       </div>
+      <AlertType
+  isOpen={showAlert}
+  title="🔥 Prêt à jouer en mode  ?"
+  niveau ={modeDeJeu.find(mode => mode.id === selectedMode)?.title || ""}
+  mode={modeDeJeu.find(mode => mode.id === selectedMode)?.niveau || ""}
+  message="Ce mode contient des défis intenses. Assurez-vous d’être à l’aise avant de continuer."
+  buttonText="Allons-y 😈"
+  redirectTo="/jeu/action-verite"
+  onClose={() => setShowAlert(false)}
+/>
+
     </motion.div>
   );
 };

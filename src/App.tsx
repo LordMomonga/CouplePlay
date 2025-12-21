@@ -9,6 +9,7 @@ import { DefisCouple } from "./pages/DefisCouple"
 import { JeuxRole } from "./pages/JeuxRole"
 import { JeuxRecent } from "./pages/JeuxRecent"
 import { Profil } from "./pages/Profil"
+import { ActionOuVeriteGame } from "./features/ActionOuVeriteGames.tsx"
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/jeu-de-roles" element={<JeuxRole />} />
         <Route path="/jeux-recent" element={<JeuxRecent />} />
         <Route path="/profil" element={<Profil />} />
+        <Route path="/jeu/action-verite" element={<ActionOuVeriteGame />} />
         
       </Route>
 
