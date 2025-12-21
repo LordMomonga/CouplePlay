@@ -8,7 +8,6 @@ type GameMode = keyof typeof gameData;
 export const ActionOuVeriteGame = () => {
 const location = useLocation();
 
-
   const [mode, setMode] = useState<string>("");
   const [niveau, setNiveau] = useState<string>("");
   const [current, setCurrent] = useState<string | null>(null);
