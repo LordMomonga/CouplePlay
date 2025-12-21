@@ -120,7 +120,7 @@ useEffect(() => {
           animate={{ scale: 1, opacity: 1 }}
           className="mb-4 text-xl font-bold text-gray-200"
         >
-          🙂‍↕️ {currentPlayer}, toi !
+           👉{currentPlayer}👈
         </motion.p>
       )}
       {/* Titre */}

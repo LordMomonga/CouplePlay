@@ -40,7 +40,10 @@ useEffect(() => {
           <FaBars className="text-xl" />
         </NavLink>
         <div className='text-[10px]'>
+          <NavLink to="/" >
             <span className='text-3xl'>Couple</span><span className='text-xl font-bold'>Zone💕</span>
+
+          </NavLink>
         </div>
 
         <div className="flex items-center gap-3">
