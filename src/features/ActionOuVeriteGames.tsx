@@ -7,7 +7,6 @@ type GameMode = keyof typeof gameData;
 
 export const ActionOuVeriteGame = () => {
 const location = useLocation();
-const [hasEnterPlayer, setHasEnterPlayer] = useState(false);    
 
 
   const [mode, setMode] = useState<string>("");
