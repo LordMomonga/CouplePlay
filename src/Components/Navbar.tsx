@@ -14,7 +14,7 @@ export interface NavItem {
 
 const nav: NavItem[] = [
   { link: "/", icon: BiHomeAlt, name: "Accueil" },
-  { link: "/courses", icon: BiJoystick, name: "Jouer" },
+  { link: "/jeux-recent", icon: BiJoystick, name: "Jouer" },
   { link: "/profil", icon: AiOutlineUser, name: "Profil" },
 ];
 

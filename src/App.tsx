@@ -7,6 +7,8 @@ import { ActionVerite } from "./pages/ActionVerite"
 import { QuestionReponse } from "./pages/QuestionReponse"
 import { DefisCouple } from "./pages/DefisCouple"
 import { JeuxRole } from "./pages/JeuxRole"
+import { JeuxRecent } from "./pages/JeuxRecent"
+import { Profil } from "./pages/Profil"
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
         <Route path="/questions-reponses" element={<QuestionReponse />} />
         <Route path="/defis-couple" element={<DefisCouple />} />
         <Route path="/jeu-de-roles" element={<JeuxRole />} />
+        <Route path="/jeux-recent" element={<JeuxRecent />} />
+        <Route path="/profil" element={<Profil />} />
         
       </Route>
 
