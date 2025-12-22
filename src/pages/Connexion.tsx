@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Connexion = () => {
   const navigate = useNavigate();
@@ -12,6 +12,14 @@ export const Connexion = () => {
     // TODO: brancher backend
     console.log({ email, password });
   };
+
+  useEffect(() => {
+  document.body.style.overflow = "hidden";
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, []);
+
 
   return (
     <motion.div

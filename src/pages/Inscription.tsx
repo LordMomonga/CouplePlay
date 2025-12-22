@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Inscription = () => {
   const navigate = useNavigate();
@@ -10,25 +10,42 @@ export const Inscription = () => {
   const [password, setPassword] = useState("");
 
   const handleRegister = () => {
-    // TODO: brancher backend
     console.log({ username, email, password });
   };
+  
+    useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   return (
     <motion.div
-      className="min-h-screen flex items-center justify-center px-4
-      bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white"
+      className="
+        h-screen overflow-hidden
+        flex items-start py-15 justify-center
+        bg-gradient-to-br from-gray-900 via-gray-800 to-black
+        text-white px-4
+        rounded-2xl
+      "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
+      {/* ===== CARD ===== */}
       <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
+        initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="w-full max-w-sm bg-white/10 backdrop-blur-xl rounded-2xl p-6 shadow-xl"
+        className="
+          w-full max-w-md
+          bg-white/10 backdrop-blur-xl
+          rounded-2xl p-6
+          shadow-2xl
+        "
       >
-        <h2 className="text-2xl font-bold text-center mb-6">
-          ✨ Inscription
-        </h2>
+        <h1 className="text-2xl font-bold text-center mb-6">
+           Créer un compte
+        </h1>
 
         <div className="flex flex-col gap-4">
           <input
@@ -59,11 +76,13 @@ export const Inscription = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleRegister}
-            className="mt-2 py-3 rounded-xl
-            bg-gradient-to-r from-emerald-600 to-teal-600
-            font-semibold shadow-md"
+            className="
+              mt-2 py-3 rounded-xl
+              bg-gradient-to-r from-emerald-600 to-teal-600
+              font-semibold shadow-lg
+            "
           >
-            Créer un compte
+            Créer mon compte 🚀
           </motion.button>
         </div>
 
@@ -73,7 +92,7 @@ export const Inscription = () => {
             onClick={() => navigate("/connexion")}
             className="text-emerald-400 font-semibold cursor-pointer"
           >
-            Connexion
+            Se connecter
           </span>
         </p>
       </motion.div>

@@ -55,6 +55,13 @@ useEffect(() => {
   setCurrentPlayer(pickRandomPlayer());
 }, [gameStarted]);
 
+  useEffect(() => {
+  document.body.style.overflow = "hidden";
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, []);
+
   // 🧩 ÉCRAN AVANT JEU
   if (!gameStarted) {
     return (
