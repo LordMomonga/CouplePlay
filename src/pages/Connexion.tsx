@@ -23,7 +23,7 @@ export const Connexion = () => {
 
   return (
     <motion.div
-      className="min-h-screen flex items-center justify-center px-4
+      className="min-h-screen flex items-start py-[30%] justify-center px-4
       bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

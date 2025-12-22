@@ -74,6 +74,20 @@ export const gameData = {
       "Fais durer le moment sans toucher 😈",
       "Donne un baiser très lent 💋",
       "Impose un jeu de regard dominant 😏",
+      "Déshabille toi complètement des yeux de ton/ta partenaire 🔥",
+      "Mord les tétons de ton/ta partenaire doucement 😈",
+      "Passe ta main sur les parties intimes de ton/ta partenaire pendant 10 secondes",
+      "Fais une danse sexy pour ton partenaire avec des sous vetements",
+      "Caresse tout le corps de ton/ta partenaire de facon passionnée 🔥" ,
+      "Demande une position de ton choix a ton/ta partenaire et fais ce que tu veux pendant 10 secondes",
+      "Mettez vous nus en position levrette face a face et faites tous sauf une penetreration",
+      "Sois dominant/e et ordonne a ton/ta partenaire de faire quelque chose pour toi pendant 20 secondes",
+      
+      
+
+
+
+
     ],
     verites: [
       "Qu’est-ce qui t’excite le plus chez lui/elle ?",
@@ -98,6 +112,11 @@ export const gameData = {
       "Laisse-toi guider entièrement pendant 30 secondes ⛓️",
       "Approche lentement sans toucher puis recule 😏",
       "Fais durer le suspense volontairement 🔥",
+      "Faire un cunilingus/pipe a ta partenaire 😈", 
+      "Penetre ta partenaire pendant 20 secondes top chronos 😳",
+        "Utilise un accessoire pour pimenter le jeu 🔥",
+        "reste couché/e et prend le sex de ton partenaire en position assise dans la bouche",
+        ""
     ],
     verites: [
       "Quel est ton désir le plus inavoué ?",

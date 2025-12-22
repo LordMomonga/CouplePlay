@@ -12,7 +12,7 @@ export const Inscription = () => {
   const handleRegister = () => {
     console.log({ username, email, password });
   };
-  
+
     useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -82,7 +82,7 @@ export const Inscription = () => {
               font-semibold shadow-lg
             "
           >
-            Créer mon compte 🚀
+            Créer mon compte 
           </motion.button>
         </div>
 
