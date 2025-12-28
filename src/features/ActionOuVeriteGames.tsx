@@ -2,178 +2,221 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { gameData } from "../data/actionVeriteData";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
+import { getSocket } from "../socket/socket";
 
 type GameMode = keyof typeof gameData;
+type GameType = "offline" | "online" | null;
 
 export const ActionOuVeriteGame = () => {
-const location = useLocation();
+  const location = useLocation();
+  const { user } = useAuth();
 
- // 🔹 Setup joueurs
-  const [player1, setPlayer1] = useState("");
+  // ======================
+  // 🎮 MODE DE JEU
+  // ======================
+  const [gameType, setGameType] = useState<GameType>(null);
+
+  // ======================
+  // 👥 JOUEURS
+  // ======================
+  const [player1, setPlayer1] = useState(user?.username || "");
   const [player2, setPlayer2] = useState("");
+  const [playersOnline, setPlayersOnline] = useState<string[]>([]);
   const [gameStarted, setGameStarted] = useState(false);
 
-  const [mode, setMode] = useState<string>("");
-  const [niveau, setNiveau] = useState<string>("");
-  const [current, setCurrent] = useState<string | null>(null);
-  const [currentPlayer, setCurrentPlayer] = useState<string>("");
+  // ======================
+  // 🧠 JEU
+  // ======================
+  const [mode, setMode] = useState("");
+  const [niveau, setNiveau] = useState("");
+  const [question, setQuestion] = useState<string | null>(null);
+  const [currentPlayer, setCurrentPlayer] = useState<string | null>(null);
+  const [waitingMessage, setWaitingMessage] = useState<string>("");
 
-useEffect(() => {
+  // ======================
+  // 📍 PARAMÈTRES
+  // ======================
+  useEffect(() => {
     if (!location.state) return;
-
-    const { mode, niveau } = location.state as {
-      mode: string;
-      niveau: string;
-    };
-
+    const { mode, niveau } = location.state as any;
     setMode(mode);
     setNiveau(niveau);
   }, [location.state]);
 
-  const { actions, verites } = gameData[niveau as GameMode] || { actions: [], verites: [] };
+  // ======================
+  // 🌐 SOCKET ONLINE
+  // ======================
+  useEffect(() => {
+    if (gameType !== "online") return;
+    const socket = getSocket();
+    if (!socket) return;
 
-  const tirerAction = () => {
-    setCurrentPlayer(pickRandomPlayer());
-    setCurrent(actions[Math.floor(Math.random() * actions.length)]);
-  };
+    // Recevoir la liste des joueurs connectés
+    socket.on("game:players", (list: string[]) => {
+      setPlayersOnline(list);
+      if (list.length < 2) setWaitingMessage("En attente d'un autre joueur...");
+      else setWaitingMessage("");
+    });
 
-  const tirerVerite = () => {
-    setCurrentPlayer(pickRandomPlayer());
-    setCurrent(verites[Math.floor(Math.random() * verites.length)]);
-  };
+    // Quand le jeu démarre
+    socket.on("game:started", () => {
+      setGameStarted(true);
+      setWaitingMessage("");
+    });
 
-  // 🎲 Tirage joueur aléatoire
-  const pickRandomPlayer = () => {
+    // Résultat action ou vérité
+    socket.on("action-verite:result", (data: any) => {
+      setQuestion(data.question);
+      setCurrentPlayer(data.player);
+    });
+
+    return () => {
+      socket.off("game:players");
+      socket.off("game:started");
+      socket.off("action-verite:result");
+    };
+  }, [gameType]);
+
+  // ======================
+  // 🎯 LOGIQUE OFFLINE
+  // ======================
+  const playOffline = (type: "action" | "verite") => {
+    const data = gameData[niveau as GameMode];
+    if (!data) return;
+
+    const list = type === "action" ? data.actions : data.verites;
     const players = [player1, player2];
-    return players[Math.floor(Math.random() * players.length)];
+
+    setQuestion(list[Math.floor(Math.random() * list.length)]);
+    setCurrentPlayer(players[Math.floor(Math.random() * players.length)]);
   };
-  
-  useEffect(() => {
-  if (!gameStarted) return;
 
-  // Initialisation du premier joueur
-  setCurrentPlayer(pickRandomPlayer());
-}, [gameStarted]);
+  // ======================
+  // 🌐 LOGIQUE ONLINE
+  // ======================
+  const playOnline = (type: "action" | "verite") => {
+    const socket = getSocket();
+    if (!socket) return;
 
-  useEffect(() => {
-  document.body.style.overflow = "hidden";
-  return () => {
-    document.body.style.overflow = "auto";
+    socket.emit("action-verite:play", {
+      type,
+      niveau,
+      players: [player1, player2],
+    });
   };
-}, []);
 
-  // 🧩 ÉCRAN AVANT JEU
-  if (!gameStarted) {
+  const play = (type: "action" | "verite") => {
+    if (gameType === "offline") playOffline(type);
+    if (gameType === "online") playOnline(type);
+  };
+
+  // ======================
+  // 🧩 ÉCRAN CHOIX MODE
+  // ======================
+  if (!gameType) {
     return (
-      <motion.div
-        className="min-h-screen flex flex-col items-center justify-center px-4 bg-gradient-to-br from-red-400 via-rose-700 to-amber-900 text-white"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-      >
-        <motion.h1
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="text-3xl font-bold mb-6"
+      <motion.div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-600 to-purple-800 text-white gap-6">
+        <h1 className="text-3xl font-bold">Comment voulez-vous jouer ? 🎮</h1>
+
+        <button
+          onClick={() => setGameType("offline")}
+          className="px-6 py-3 rounded-xl bg-white text-black font-bold"
         >
-          Qui joue ? 💕
-        </motion.h1>
+          📴 Offline (même téléphone)
+        </button>
 
-        <div className="w-full max-w-sm flex flex-col gap-4" >
-          <input
-            type="text"
-            placeholder="Nom du joueur 1"
-            value={player1}
-            onChange={(e) => setPlayer1(e.target.value)}
-            className="px-4 py-3 rounded-xl text-gray-900 outline-none bg-white/90"
-          />
-
-          <input
-            type="text"
-            placeholder="Nom du joueur 2"
-            value={player2}
-            onChange={(e) => setPlayer2(e.target.value)}
-            className="px-4 py-3 rounded-xl text-gray-900 outline-none bg-white/90"
-          />
-
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            disabled={!player1 || !player2}
-            onClick={() => setGameStarted(true)}
-            className="
-              mt-4 px-6 py-3 rounded-xl
-              bg-gradient-to-r from-blue-600 to-blue-600
-              font-bold text-white
-              disabled:opacity-50
-            "
-          >
-            Commencer 🎮
-          </motion.button>
-        </div>
+        <button
+          onClick={() => setGameType("online")}
+          className="px-6 py-3 rounded-xl bg-black/40 border border-white font-bold"
+        >
+          🌐 Online (à distance)
+        </button>
       </motion.div>
     );
   }
 
-  return (
-    <motion.div
-      className="min-h-screen flex flex-col items-center justify-center px-4 bg-gradient-to-br from-red-400 via-rose-700 to-amber-900 text-white"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-    >
-              {currentPlayer && (
-        <motion.p
-          key={currentPlayer}
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="mb-4 text-xl font-bold text-gray-200"
+  // ======================
+  // 🧩 ÉCRAN JOUEURS
+  // ======================
+  if (!gameStarted) {
+    return (
+      <motion.div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-red-400 to-pink-700 text-white gap-4">
+        <h2 className="text-2xl font-bold">Qui joue ? 💕</h2>
+
+        {!user && (
+          <input
+            placeholder="Joueur 1"
+            value={player1}
+            onChange={(e) => setPlayer1(e.target.value)}
+            className="px-4 py-2 rounded-xl text-black"
+          />
+        )}
+
+        {gameType === "offline" && (
+          <input
+            placeholder="Joueur 2"
+            value={player2}
+            onChange={(e) => setPlayer2(e.target.value)}
+            className="px-4 py-2 rounded-xl text-black"
+          />
+        )}
+
+        {gameType === "online" && (
+          <div className="flex flex-col items-center">
+            <p>Joueurs connectés :</p>
+            <ul>
+              {playersOnline.map((p, idx) => (
+                <li key={idx}>{p}</li>
+              ))}
+            </ul>
+            {waitingMessage && <p>{waitingMessage}</p>}
+          </div>
+        )}
+
+        <button
+          onClick={() => {
+            if (gameType === "online") getSocket()?.emit("game:start");
+            else setGameStarted(true);
+          }}
+          disabled={gameType === "offline" && (!player1 || !player2)}
+          className="px-6 py-3 rounded-xl bg-black/50 font-bold"
         >
-           👉{currentPlayer}👈
-        </motion.p>
-      )}
-      {/* Titre */}
-      <h1 className="text-3xl font-bold mb-2">
-        Action ou Vérité 🎲
-      </h1>
-
-      {/* Infos */}
-      <p className="mb-6 text-white/80">
-        Mode : <span className="font-semibold capitalize">{mode}</span> • Niveau :{" "}
-        <span className="font-semibold">{niveau}</span>
-      </p>
-
-
-
-
-      {/* Carte */}
-      <motion.div
-        key={current}
-        initial={{ scale: 0.85, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 160 }}
-        className="bg-white/90 text-gray-900 rounded-2xl p-6 shadow-xl max-w-md w-full text-center mb-6"
-      >
-        {current ?? "Choisissez Action ou Vérité"}
+          Commencer 🎮
+        </button>
       </motion.div>
+    );
+  }
 
-      {/* Boutons */}
+  // ======================
+  // 🎮 JEU
+  // ======================
+  return (
+    <motion.div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-rose-600 to-amber-800 text-white gap-6">
+      <h1 className="text-3xl font-bold">Action ou Vérité 🎲</h1>
+
+      {currentPlayer && (
+        <p className="text-xl font-bold">👉 {currentPlayer} joue</p>
+      )}
+
+      <div className="bg-white text-black p-6 rounded-xl max-w-md w-full text-center">
+        {question ?? "Choisissez Action ou Vérité"}
+      </div>
+
       <div className="flex gap-4">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={tirerAction}
-          className="px-6 py-3 rounded-xl bg-blue-600 font-bold shadow-lg"
+        <button
+          onClick={() => play("action")}
+          className="px-6 py-3 bg-blue-600 rounded-xl font-bold"
         >
           🎯 Action
-        </motion.button>
+        </button>
 
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={tirerVerite}
-          className="px-6 py-3 rounded-xl bg-purple-600 font-bold shadow-lg"
+        <button
+          onClick={() => play("verite")}
+          className="px-6 py-3 bg-purple-600 rounded-xl font-bold"
         >
           💬 Vérité
-        </motion.button>
+        </button>
       </div>
     </motion.div>
   );
