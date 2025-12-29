@@ -18,7 +18,7 @@ export const Connexion = () => {
       setError("Veuillez remplir tous les champs");
       return;
     }
-
+    console.log("Tentative de connexion avec :", { email, password });
     try {
       setLoading(true);
       setError("");
