@@ -28,9 +28,8 @@ export const ActionOuVeriteGame = () => {
   // ======================
   // 🧠 JEU
   // ======================
-  
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [mode, setMode] = useState("");
   const [niveau, setNiveau] = useState("");
   const [question, setQuestion] = useState<string | null>(null);
   const [currentPlayer, setCurrentPlayer] = useState<string | null>(null);
@@ -41,8 +40,7 @@ export const ActionOuVeriteGame = () => {
   // ======================
   useEffect(() => {
     if (!location.state) return;
-    const { mode, niveau } = location.state as any;
-    setMode(mode);
+    const { niveau } = location.state as any;
     setNiveau(niveau);
   }, [location.state]);
 
@@ -151,7 +149,7 @@ export const ActionOuVeriteGame = () => {
             placeholder="Joueur 1"
             value={player1}
             onChange={(e) => setPlayer1(e.target.value)}
-            className="px-4 py-2 rounded-xl text-black"
+            className="px-4 py-2 rounded-xl text-black bg-white/80"
           />
         )}
 
@@ -160,7 +158,7 @@ export const ActionOuVeriteGame = () => {
             placeholder="Joueur 2"
             value={player2}
             onChange={(e) => setPlayer2(e.target.value)}
-            className="px-4 py-2 rounded-xl text-black"
+            className="px-4 py-2 rounded-xl text-black bg-white/80"
           />
         )}
 
