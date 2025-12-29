@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { AlertType } from "../Components/Modals/AlertType";
 import { useState } from "react";
-import { useAuth } from "../auth/AuthContext";
 
 export const ActionVerite = () => {
 
