@@ -28,6 +28,8 @@ export const ActionOuVeriteGame = () => {
   // ======================
   // 🧠 JEU
   // ======================
+  
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [mode, setMode] = useState("");
   const [niveau, setNiveau] = useState("");
   const [question, setQuestion] = useState<string | null>(null);

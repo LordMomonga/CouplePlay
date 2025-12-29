@@ -7,7 +7,6 @@ export const ActionVerite = () => {
 
     const [showAlert, setShowAlert] = useState(false);
     const [selectedMode, setSelectedMode] = useState<number | null>(null);
-    const { user } = useAuth();
     
   const modeDeJeu = [
     {
