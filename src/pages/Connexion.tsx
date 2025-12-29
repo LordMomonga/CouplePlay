@@ -35,7 +35,15 @@ export const Connexion = () => {
       console.log(res, "response data from login");
       
       login({
-  user: { username: res.data.user.username, email: res.data.user.email, couple: res.data.user.couple, createdAt: res.data.user.createdAt } ,
+  user: { 
+    _id: res.data.user._id,
+    username: res.data.user.username, 
+    email: res.data.user.email, 
+    avatar: res.data.user.avatar,
+    stats: res.data.user.stats,
+    couple: res.data.user.couple, 
+    createdAt: res.data.user.createdAt,
+    updatedAt: res.data.user.updatedAt,} ,
   token: res.data.token,
 });
 
