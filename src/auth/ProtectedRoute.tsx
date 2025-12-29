@@ -1,7 +1,17 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
-export const PrivateRoute = ({ children }: { children: JSX.Element }) => {
-  const { token } = useAuth();
+import type { ReactNode } from "react";
 
-  return token ? children : <Navigate to="/connexion" />;
-};
+interface Props {
+  children: ReactNode;
+}
+
+export default function ProtectedRoute({ children }: Props) {
+  const { user } = useAuth();
+
+  if (!user) {
+    return <Navigate to="/connexion" replace />;
+  }
+
+  return <>{children}</>;
+}
