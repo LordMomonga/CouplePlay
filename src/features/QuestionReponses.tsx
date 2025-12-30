@@ -75,7 +75,9 @@ if (!currentQuestion && remainingQuestions.length === 0) {
 
   const currentPlayer="";
   const waitingMessage="";
-
+if(gameType === "offline"){
+    setPlayersOnline([])
+}
 
   if (!gameType) {
     return (
