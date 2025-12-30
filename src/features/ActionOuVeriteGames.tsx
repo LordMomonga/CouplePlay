@@ -153,13 +153,17 @@ export const ActionOuVeriteGame = () => {
           />
         )}
 
-        {gameType === "offline" && (
-          <input
-            placeholder="Joueur 2"
+       {gameType === "offline" && (
+            <div>
+            <div className="mb-2 ">joueur 1: <span className="font-bold text-blue-900"> {user?.username} (vous)</span></div>
+                  <input
+            placeholder=" entrer le Joueur 2"
             value={player2}
             onChange={(e) => setPlayer2(e.target.value)}
             className="px-4 py-2 rounded-xl text-black bg-white/80"
           />
+            </div>
+        
         )}
 
         {gameType === "online" && (

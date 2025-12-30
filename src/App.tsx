@@ -12,6 +12,7 @@ import { Profil } from "./pages/Profil"
 import { ActionOuVeriteGame } from "./features/ActionOuVeriteGames.tsx"
 import { Connexion } from "./pages/Connexion.tsx"
 import { Inscription } from "./pages/Inscription.tsx"
+import { QuestionReponses } from "./features/QuestionReponses.tsx"
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/jeux-recent" element={<JeuxRecent />} />
         <Route path="/profil" element={<Profil />} />
         <Route path="/jeu/action-verite" element={<ActionOuVeriteGame />} />
+        <Route path="/jeu/questions-reponses" element={<QuestionReponses />} />
         <Route path="/connexion" element={<Connexion />} />
         <Route path="/inscription" element={<Inscription />} />
         

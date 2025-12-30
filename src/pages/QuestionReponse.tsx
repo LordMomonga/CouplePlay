@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { AlertType } from "../Components/Modals/AlertType";
 
+
 export const QuestionReponse = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [selectedGame, setSelectedGame] = useState<any>(null);
@@ -15,7 +16,7 @@ export const QuestionReponse = () => {
       description:
         "Des questions fun pour découvrir qui correspond le plus à chaque situation.",
       color: "from-emerald-500 to-teal-600",
-      route: "/jeu/qui-de-nous-deux",
+      route: "/jeu/questions-reponses",
     },
     {
       id: 2,
@@ -24,7 +25,7 @@ export const QuestionReponse = () => {
       description:
         "Débattez sur les limites, les règles et les attentes dans votre relation.",
       color: "from-emerald-500 to-teal-600",
-      route: "/jeu/qui-a-le-droit",
+      route: "/jeu/questions-reponses",
     },
   ];
 
