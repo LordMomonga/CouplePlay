@@ -62,8 +62,7 @@ if (!currentQuestion && remainingQuestions.length === 0) {
   const [player1, setPlayer1] = useState(user?.username || "");
   const [player2, setPlayer2] = useState("");
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
-  const [playersOnline, setPlayersOnline] = useState<string[]>([]);
+  const playersOnline= useState<string[]>([]);
   const [gameStarted, setGameStarted] = useState(false);
 
 
@@ -73,8 +72,8 @@ if (!currentQuestion && remainingQuestions.length === 0) {
   
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [currentPlayer, setCurrentPlayer] = useState<string | null>(null);
-  const [waitingMessage, setWaitingMessage] = useState<string>("");
+  const currentPlayer="";
+  const waitingMessage="";
 
 
   if (!gameType) {
