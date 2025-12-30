@@ -104,7 +104,7 @@ if (!currentQuestion && remainingQuestions.length === 0) {
 
         {!user && (
           <input
-            placeholder="Joueur 1"
+            placeholder=" entrer le Joueur 1"
             value={player1}
             onChange={(e) => setPlayer1(e.target.value)}
             className="px-4 py-2 rounded-xl text-black bg-white/80"
@@ -113,7 +113,7 @@ if (!currentQuestion && remainingQuestions.length === 0) {
 
         {gameType === "offline" && (
             <div>
-            <div className="mb-2 ">joueur 1: <span className="font-bold text-blue-900"> {user?.username} (vous)</span></div>
+            {user && <div className="mb-2 ">joueur 1: <span className="font-bold text-blue-900"> {user?.username} (vous)</span></div>}
                   <input
             placeholder=" entrer le Joueur 2"
             value={player2}

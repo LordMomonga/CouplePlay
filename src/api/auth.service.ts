@@ -1,7 +1,6 @@
 import axios from "axios";
 
-//const API_URL = "https://couplezonebackend-production.up.railway.app/api";
-const LOCAL_URL = "http://localhost:5000/api";
+const API_URL = "https://couplezonebackend-production.up.railway.app/api";
 
 export interface RegisterPayload {
   username: string;
@@ -15,9 +14,9 @@ export interface LoginPayload {
 }
 
 export const register = (data: RegisterPayload) => {
-  return axios.post(`${LOCAL_URL}/register`, data);
+  return axios.post(`${API_URL}/register`, data);
 };
 
 export const login = (data: LoginPayload) => {
-  return axios.post(`${LOCAL_URL}/login`, data);
+  return axios.post(`${API_URL}/login`, data);
 };

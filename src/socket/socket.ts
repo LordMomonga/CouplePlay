@@ -8,7 +8,7 @@ let socket: Socket | null = null;
 export const connectSocket = (token: string) => {
   if (socket) return socket; // ⚠️ empêche double connexion
 
-  socket = io("http://localhost:5000", {
+  socket = io("https://couplezonebackend-production.up.railway.app", {
     auth: {
       token, // 👈 envoyé au backend (socket.handshake.auth.token)
     },
