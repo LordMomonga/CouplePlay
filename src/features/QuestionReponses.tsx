@@ -61,8 +61,10 @@ if (!currentQuestion && remainingQuestions.length === 0) {
   // ======================
   const [player1, setPlayer1] = useState(user?.username || "");
   const [player2, setPlayer2] = useState("");
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const playersOnline= useState<string[]>([]);
+  
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [playersOnline, setPlayersOnline]= useState<string[]>([]);
+
   const [gameStarted, setGameStarted] = useState(false);
 
 
