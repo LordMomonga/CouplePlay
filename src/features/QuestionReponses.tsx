@@ -63,7 +63,6 @@ if (!currentQuestion && remainingQuestions.length === 0) {
   const [player2, setPlayer2] = useState("");
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [playersOnline, setPlayersOnline]= useState<string[]>([]);
 
   const [gameStarted, setGameStarted] = useState(false);
 
@@ -75,9 +74,7 @@ if (!currentQuestion && remainingQuestions.length === 0) {
 
   const currentPlayer="";
   const waitingMessage="";
-if(gameType === "offline"){
-    setPlayersOnline([])
-}
+
 
   if (!gameType) {
     return (
@@ -131,9 +128,7 @@ if(gameType === "offline"){
           <div className="flex flex-col items-center">
             <p>Joueurs connectés :</p>
             <ul>
-              {playersOnline.map((p, idx) => (
-                <li key={idx}>{p}</li>
-              ))}
+            
             </ul>
             {waitingMessage && <p>{waitingMessage}</p>}
           </div>
